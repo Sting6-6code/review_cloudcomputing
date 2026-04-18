@@ -4,18 +4,18 @@
 
 | 模块 | 主题 | 笔记文件 |
 |------|------|----------|
-| L01 | Fundamentals of Cloud Computing | [01-基础概念与开发理念.md](./01-基础概念与开发理念.md) |
+| L01 | Fundamentals of Cloud Computing | [03-云平台基础AWS.md](./03-云平台基础AWS.md)（NIST专题）|
 | L02 | SDLC / 12-Factor App / DevOps | [01-基础概念与开发理念.md](./01-基础概念与开发理念.md) |
 | L03 | Linux CLI / Regions & AZs | [02-Linux与区域可用区.md](./02-Linux与区域可用区.md) |
-| L04 | Testing / CI / Version Control | [L04_testing_ci.md](./L04_testing_ci.md) |
-| L05 | Networking / IaC / Terraform | [L05_networking_iac.md](./L05_networking_iac.md) |
-| L06 | IAM / Virtualization / Machine Images / Cloud Init | [L06_iam_virtualization.md](./L06_iam_virtualization.md) |
-| L07 | Cloud Storage Solutions | [L07_storage.md](./L07_storage.md) |
-| L08 | DNS / CDN / SRE / Observability | [L08_dns_cdn_sre.md](./L08_dns_cdn_sre.md) |
-| L10 | Email / Scaling | [L10_email_scaling.md](./L10_email_scaling.md) |
-| L11 | Microservices / Event-Driven / Serverless | [L11_microservices_serverless.md](./L11_microservices_serverless.md) |
-| L12 | CD / Cloud Security | [L12_cd_security.md](./L12_cd_security.md) |
-| L13 | Architecting for the Cloud | [L13_architecture.md](./L13_architecture.md) |
+| L04 | Testing / CI / Version Control | [03-版本控制与CICD.md](./03-版本控制与CICD.md) |
+| L05 | Networking / IaC / Terraform | [04-网络基础与IaC.md](./04-网络基础与IaC.md) |
+| L06 | IAM / Virtualization / Machine Images / Cloud Init | [05-计算身份与镜像.md](./05-计算身份与镜像.md) |
+| L07 | Cloud Storage Solutions | [06-网络存储与运维.md](./06-网络存储与运维.md) |
+| L08 | DNS / CDN / SRE / Observability | [06-网络存储与运维.md](./06-网络存储与运维.md) |
+| L10 | Email / Scaling | [06-网络存储与运维.md](./06-网络存储与运维.md) |
+| L11 | Microservices / Event-Driven / Serverless | [07-现代架构.md](./07-现代架构.md) |
+| L12 | CD / Cloud Security | [07-现代架构.md](./07-现代架构.md)（安全部分）|
+| L13 | Architecting for the Cloud | [07-现代架构.md](./07-现代架构.md) |
 
 ---
 
@@ -51,12 +51,12 @@
 - [x] L01 — Cloud Fundamentals
 - [x] L02 — SDLC / DevOps / 12-Factor
 - [x] L03 — Linux / Regions & AZs
-- [ ] L04 — Testing / CI
-- [ ] L05 — Networking / IaC / Terraform
-- [ ] L06 — IAM / Virtualization
-- [ ] L07 — Storage
-- [ ] L08 — DNS / CDN / SRE / Observability
-- [ ] L10 — Email / Scaling
-- [ ] L11 — Microservices / Serverless
-- [ ] L12 — CD / Security
-- [ ] L13 — Cloud Architecture
+- [x] L04 — Testing / CI
+- [x] L05 — Networking / IaC / Terraform
+- [x] L06 — IAM / Virtualization
+- [x] L07 — Storage
+- [x] L08 — DNS / CDN / SRE / Observability
+- [x] L10 — Email / Scaling
+- [x] L11 — Microservices / Serverless
+- [x] L12 — CD / Security
+- [x] L13 — Cloud Architecture
