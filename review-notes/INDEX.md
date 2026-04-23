@@ -11,7 +11,7 @@
 | L05 | Networking / IaC / Terraform | [04-网络基础与IaC.md](./04-网络基础与IaC.md) |
 | L06 | IAM / Virtualization / Machine Images / Cloud Init | [05-计算身份与镜像.md](./05-计算身份与镜像.md) |
 | L07 | Cloud Storage Solutions | [06-网络存储与运维.md](./06-网络存储与运维.md) |
-| L08 | DNS / CDN / SRE / Observability | [06-网络存储与运维.md](./06-网络存储与运维.md) |
+| L08 | DNS / CDN / SRE / Observability | [06-网络存储与运维.md](./06-网络存储与运维.md) · [L08_dns_cdn_sre_obs.md](./L08_dns_cdn_sre_obs.md)（PPT精讲）|
 | L10 | Email / Scaling | [06-网络存储与运维.md](./06-网络存储与运维.md) |
 | L11 | Microservices / Event-Driven / Serverless | [07-现代架构.md](./07-现代架构.md) |
 | L12 | CD / Cloud Security | [07-现代架构.md](./07-现代架构.md)（安全部分）|
