@@ -1624,4 +1624,196 @@ Diana should build the monolith with **clean internal module boundaries** (auth,
 
 ---
 
+---
+
+## 23. 30条最重要最容易考的知识点
+
+> 按模块归类，标注考点类型：⭐概念辨析 / ⚠️陷阱 / 🔄易混淆对比
+
+---
+
+### 云基础 & 服务模型
+
+**1. ⭐ NIST 5大特性必须全背**
+On-demand self-service / Broad network access / Resource pooling / Rapid elasticity / Measured service。考试会给"特性"让你判断哪个不属于，常见干扰项："vendor lock-in prevention"、"multi-cloud support"。
+
+**2. 🔄 IaaS / PaaS / SaaS 客户责任边界**
+- IaaS：客户管 OS + App + 数据 + IAM + 网络配置 + 防火墙 + 加密
+- PaaS：客户管 App + 数据
+- SaaS：客户只管数据 + 访问控制
+记忆口诀：**越往上(SaaS)，客户管的越少**。
+
+**3. ⚠️ "Security OF the cloud" vs "Security IN the cloud"**
+Provider = Security OF the cloud（物理机房/虚拟化/硬件）。Customer = Security IN the cloud（OS补丁/应用代码/IAM策略/加密配置）。IaaS客户责任最重，SaaS最轻。
+
+---
+
+### 网络
+
+**4. 🔄 Security Group vs NACL（必考对比）**
+| | SG | NACL |
+|---|---|---|
+| 状态 | **Stateful**（有状态，回包自动放行） | **Stateless**（无状态，双向都要配规则） |
+| 层级 | 实例级别 | 子网级别 |
+| 规则 | 仅允许(Allow only) | 允许 + 拒绝(Allow + Deny) |
+
+**5. ⭐ NAT Gateway 的方向**
+NAT Gateway 只允许**私有子网主动访问外网**（出站），外网无法主动发起连接到私有子网（无入站）。Internet Gateway 双向通。
+
+---
+
+### DevOps & 12-Factor
+
+**6. ⭐ 12-Factor 三大高频考点**
+- **Factor III（Config）**：配置放环境变量，绝不硬编码在代码里
+- **Factor VI（Processes）**：进程无状态(stateless)，不在本地保存会话
+- **Factor XI（Logs）**：日志是流(event stream)，不写文件，输出到 stdout
+
+**7. 🔄 Continuous Delivery vs Continuous Deployment**
+- Continuous **Delivery** = 每次提交**可以**部署，但有**人工审批**门控
+- Continuous **Deployment** = 每次提交**自动**部署到生产，无人工介入
+⚠️ 两者名字极像，考试爱混！
+
+**8. ⭐ DORA 4指标**
+Deployment Frequency / Lead Time for Changes / Change Failure Rate / **MTTR**（Mean Time to Recover）。衡量DevOps成熟度。
+
+---
+
+### IAM & 定价
+
+**9. ⭐ EC2定价4种模型对比**
+| 类型 | 承诺 | 折扣 | 适合 |
+|---|---|---|---|
+| On-Demand | 无 | 0 | 短期/不可预测 |
+| Reserved | 1-3年 | 最高72% | 稳定基线负载 |
+| Spot | 无 | 最高90% | 容错/批处理 **[可被中断]** |
+| Dedicated Host | 按主机 | 按合同 | 合规/软件许可 |
+
+**10. ⚠️ GCP SUDs vs CUDs**
+- SUDs（Sustained Use）= **自动**给折扣，VM当月运行>25%即触发，最高**30%**
+- CUDs（Committed Use）= 需**主动承诺**1或3年，最高**70%**
+⚠️ SUDs不需要承诺，CUDs需要承诺——考试最爱考这个区别。
+
+**11. 🔄 Type 1 vs Type 2 Hypervisor**
+- Type 1（Bare-metal）= 直接运行在物理硬件上（VMware ESXi / KVM / Xen）→ 云计算用这个
+- Type 2（Hosted）= 运行在宿主OS上（VirtualBox / VMware Workstation）→ 本地开发用
+
+---
+
+### Git & IaC
+
+**12. ⚠️ Git是快照(Snapshot)，不是差异(Delta)**
+Git每次提交存的是所有文件的完整快照，不是与上次的diff。这是与SVN等CVCS的核心区别。
+
+**13. ⭐ Terraform工作流**
+`init` → `plan`（预览，不执行）→ `apply`（实际创建/修改）→ `destroy`
+`terraform.tfstate` 文件记录真实资源状态，**绝不能提交到git**（含敏感数据）。
+
+**14. ⭐ IaC幂等性(Idempotency)**
+无论执行多少次`apply`，结果都一样。这是IaC区别于手动操作的核心价值。**Config Drift（配置漂移）**= 实际状态偏离定义状态，IaC能发现并修正。
+
+---
+
+### 机器镜像 & Cloud-Init
+
+**15. ⚠️ Instance Store vs EBS-backed AMI**
+- EBS-backed：停机/终止后数据**持久化**保留 ✅
+- Instance Store：停机/终止后数据**永久丢失** ⚠️（重启也丢失）
+⚠️ 考试常问"哪种存储在实例终止后数据会丢失"。
+
+**16. ⭐ Cloud-Init只运行一次**
+Cloud-Init在**首次启动**时运行，后续重启不再执行。User Data必须以`#cloud-config`开头。IMDS地址：AWS = `169.254.169.254`，GCP = `metadata.google.internal`。
+
+---
+
+### 存储 & 数据库
+
+**17. 🔄 Multi-AZ vs Read Replica**
+| | Multi-AZ | Read Replica |
+|---|---|---|
+| 目的 | **高可用(HA)**，故障转移 | **读性能**，分担读压力 |
+| 同步方式 | 同步(Synchronous) | 异步(Asynchronous) |
+| 能接受写请求吗？ | ❌ Standby不处理流量 | ❌ 只读 |
+⚠️ Multi-AZ不能提升性能，只是为了可用性和自动故障转移。
+
+**18. ⭐ CAP定理三选二**
+C（一致性）+ A（可用性）+ P（分区容错）三选二。实际分布式系统P是必须有的（网络分区不可避免），所以只能在**CP**（牺牲可用性）和**AP**（牺牲一致性）之间选。
+
+**19. ⭐ S3存储类别记忆**
+Standard → Standard-IA → Glacier Instant → Glacier Flexible → Glacier Deep Archive（从贵到便宜，从快到慢）。Intelligent-Tiering = 不知道访问模式时用。
+
+---
+
+### DNS & CDN
+
+**20. ⚠️ CNAME三大限制**
+1. CNAME只能指向**域名**，不能直接指向IP地址
+2. CNAME**不能用在根域名**（apex domain，如 example.com）——因为根域名必须有SOA和NS记录
+3. AWS Route 53的ALIAS记录是**非标准扩展**，可以用在根域名，但不是标准DNS
+
+**21. ⭐ DNS记录类型高频考点**
+A=IPv4 / AAAA=IPv6 / CNAME=别名指向域名 / MX=邮件服务器(有优先级) / TXT=SPF/DKIM/验证 / PTR=反向DNS(IP→域名) / NS=权威名称服务器
+
+**22. 🔄 Anycast vs Unicast**
+- Anycast = 多台服务器共享同一个IP，请求路由到**最近的**那台（CDN/DNS用）
+- Unicast = 一个IP对应一台特定服务器
+CDN用Anycast实现就近访问。
+
+---
+
+### SRE & 可观测性
+
+**23. ⭐ SLI / SLO / SLA三层关系**
+SLI（测量值）→ SLO（内部目标）→ SLA（对外合同，违约有赔偿）。
+**Error Budget = 1 - SLO**。例：SLO=99.9% → 每月Error Budget = 43.2分钟。Error Budget耗尽 = 停止发布新功能，优先修复稳定性。
+
+**24. ⭐ Toil的定义**
+Toil = 手动的 + 重复的 + 可自动化的 + 战术性的 + 随业务线性增长的 + 无持久价值的工作。SRE应将Toil控制在工作量的**50%以下**。
+
+**25. ⭐ 日志级别顺序**
+`ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF`
+生产环境最低用**INFO**级别。**DEBUG绝不在生产使用**（性能+安全风险）。
+
+---
+
+### 邮件
+
+**26. 🔄 SPF vs DKIM vs DMARC**
+| | SPF | DKIM | DMARC |
+|---|---|---|---|
+| 验证方式 | IP白名单 | 非对称加密签名 | 策略层 |
+| 转发后有效？ | ❌ 断 | ✅ 有效 | 取决于对齐 |
+| 作用 | 哪些IP可以发邮件 | 邮件未被篡改 | 违规邮件如何处理(none/quarantine/reject) |
+
+**27. ⚠️ 硬退回(Hard Bounce)必须立即删除**
+Hard Bounce = 地址永久无效，**永不重试，立即从列表删除**。AWS SES：退回率>5%警告，>10%暂停发送。投诉率>0.1%警告，>0.5%暂停。
+
+---
+
+### 负载均衡 & 弹性伸缩
+
+**28. 🔄 ALB vs NLB**
+| | ALB（Application） | NLB（Network） |
+|---|---|---|
+| 层级 | Layer 7（HTTP/HTTPS） | Layer 4（TCP/UDP） |
+| 路由方式 | 路径/Host/Header/Cookie | IP+端口 |
+| 特点 | WAF集成/Cognito认证 | **静态IP每AZ**，百万级req/s |
+| 跨区负载 | **默认开启** | **默认关闭** ⚠️ |
+
+**29. ⭐ Auto Scaling关键参数**
+- **Cooldown（冷却）**：默认300秒，上次扩缩容后等待时间，防止频繁操作
+- **Warm-up（预热）**：新实例准备好之前不计入指标，防止过早触发下次扩容
+- 最常用策略：**Target Tracking**（保持指标在目标值，如CPU=70%）
+
+---
+
+### 微服务 & 事件驱动 & Serverless
+
+**30. ⭐ 微服务三大反模式（考试爱考"什么是错误做法"）**
+1. **共享数据库** = 最常见反模式，破坏松耦合，正确做法：每服务独立数据库
+2. **分布式单体（Distributed Monolith）** = 服务拆分了但依然共享DB/强依赖，同步部署 → 同时拥有两种架构的缺点
+3. **同步调用链过长** = A→B→C→D，任一失败级联崩溃，应用异步+事件驱动解耦
+
+---
+
 *End of Cheatsheet — Good luck on your CSYE 6225 final exam! 加油！*
